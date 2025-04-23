@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.inditex.price</groupId>
 	<artifactId>price-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>price-api</name>
 	<description>Prueba técnica de Inditex Backend Developer Java</description>
 	<url/>
@@ -49,6 +49,15 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.6.3</version>
 		</dependency>
 	</dependencies>
 
