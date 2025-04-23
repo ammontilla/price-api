@@ -1,0 +1,97 @@
+---
+openapi: 3.1.0
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+tags:
+  - name: Price API
+    description: Operaciones para obtener precios aplicables por producto y marca
+paths:
+  "/prices":
+    get:
+      tags:
+        - Price API
+      summary: Obtener precio aplicable para un producto, marca y fecha
+      operationId: getPrice
+      parameters:
+        - name: applicationDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+          example: '2020-06-14T16:00:00'
+        - name: productId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 35455
+        - name: brandId
+          in: query
+          required: true
+          schema:
+            type: integer
+            format: int32
+          example: 1
+      responses:
+        '200':
+          description: Precio encontrado exitosamente
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/PriceResponse"
+        '400':
+          description: Solicitud malformada o inválida
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/PriceResponse"
+        '404':
+          description: No se encontró un precio aplicable
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/PriceResponse"
+components:
+  schemas:
+    PriceResponse:
+      type: object
+      properties:
+        productId:
+          type: integer
+          format: int32
+          description: Identificador del producto
+          example: 35455
+        brandId:
+          type: integer
+          format: int32
+          description: Identificador de la marca
+          example: 1
+        priceList:
+          type: integer
+          format: int32
+          description: Identificador de la tarifa aplicable
+          example: 2
+        startDate:
+          type: string
+          format: date-time
+          description: Fecha de inicio de la tarifa
+          example: '2020-06-14T15:00:00'
+        endDate:
+          type: string
+          format: date-time
+          description: Fecha de fin de la tarifa
+          example: '2020-12-31T23:59:59'
+        price:
+          type: number
+          description: Precio final a aplicar
+          example: 25.45
+        currency:
+          type: string
+          description: Moneda
+          example: EUR
