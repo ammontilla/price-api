@@ -1,4 +1,4 @@
-package com.inditex.price_api.application.service;
+package com.inditex.price_api.core.service;
 
 
 import com.inditex.price_api.domain.model.Price;

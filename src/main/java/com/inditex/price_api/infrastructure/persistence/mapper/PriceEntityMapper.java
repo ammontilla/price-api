@@ -12,5 +12,6 @@ public interface PriceEntityMapper {
     @Mappings({
             @Mapping(source = "brand.id", target = "brandId"),
             @Mapping(source = "curr", target = "currency")
-    })    Price toDomain(PriceEntity entity);
+    })
+    Price toDomain(PriceEntity entity);
 }

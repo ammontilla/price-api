@@ -12,4 +12,5 @@ public record Price(
         Integer priority,
         BigDecimal price,
         String currency
-) {}
+) {
+}
