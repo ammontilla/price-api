@@ -129,6 +129,15 @@ Disponible en: http://localhost:8080/h2-console
 <br>JDBC URL: jdbc:h2:mem:pricesdb
 
 ---
+### 📦 Docker
+```bash
+docker build -t inditex-price-api .
+docker run -p 8080:8080 inditex-price-api
+```
+### 📡 CI/CD - GitHub Actions
+- Validación de build + tests en cada push
+- Cobertura y estilo de código
+---
 ### 🔹 Uso en herramientas externas
 Puedes importar openapi.yaml en:
 
