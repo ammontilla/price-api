@@ -35,7 +35,7 @@ Servicio REST desarrollado en Java con Spring Boot para consultar precios de pro
 
 Clonar el repositorio:
 ```bach
-git clone https://github.com/tu-usuario/price-api.git
+git clone https://github.com/ammontilla/price-api.git
 cd price-api
 ```
 
