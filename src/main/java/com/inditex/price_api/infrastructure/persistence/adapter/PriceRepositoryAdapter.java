@@ -2,6 +2,7 @@ package com.inditex.price_api.infrastructure.persistence.adapter;
 
 import com.inditex.price_api.domain.model.Price;
 import com.inditex.price_api.domain.port.output.PriceRepositoryPort;
+import com.inditex.price_api.infrastructure.exception.PriceNotFoundException;
 import com.inditex.price_api.infrastructure.persistence.entity.BrandEntity;
 import com.inditex.price_api.infrastructure.persistence.mapper.PriceEntityMapper;
 import com.inditex.price_api.infrastructure.persistence.repository.BrandJpaRepository;
@@ -25,13 +26,13 @@ public class PriceRepositoryAdapter implements PriceRepositoryPort {
     }
 
     @Override
-    public List<Price> findPricesByCriteria(LocalDateTime applicationDate, Integer productId, Integer brandId) {
+    public List<Price> findPricesByCriteria(LocalDateTime applicationStartDate, Integer productId, Integer brandId) {
         BrandEntity brand = brandJpaRepository.findById(brandId)
-                .orElseThrow(() -> new RuntimeException("Brand not found"));
+                .orElseThrow(() -> new PriceNotFoundException("Brand not found"));
 
         return jpaRepository
                 .findByBrandAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-                        brand, productId, applicationDate, applicationDate
+                        brand, productId, applicationStartDate, applicationStartDate
                 )
                 .stream()
                 .map(mapper::toDomain)

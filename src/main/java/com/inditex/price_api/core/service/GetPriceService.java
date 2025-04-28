@@ -4,6 +4,7 @@ package com.inditex.price_api.core.service;
 import com.inditex.price_api.domain.model.Price;
 import com.inditex.price_api.domain.port.input.GetPriceUseCase;
 import com.inditex.price_api.domain.port.output.PriceRepositoryPort;
+import com.inditex.price_api.infrastructure.exception.PriceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,6 +23,6 @@ public class GetPriceService implements GetPriceUseCase {
     public Price getApplicablePrice(LocalDateTime applicationDate, Integer productId, Integer brandId) {
         return repository.findPricesByCriteria(applicationDate, productId, brandId).stream()
                 .max(Comparator.comparingInt(Price::priority))
-                .orElseThrow(() -> new RuntimeException("No price found for given criteria"));
+                .orElseThrow(() -> new PriceNotFoundException("No price found for given criteria"));
     }
 }

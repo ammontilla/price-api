@@ -10,22 +10,9 @@
     </parent>
     <groupId>com.inditex.price</groupId>
     <artifactId>price-api</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0</version>
     <name>price-api</name>
     <description>Prueba técnica de Inditex Backend Developer Java</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
     <properties>
         <java.version>17</java.version>
         <mapstruct.version>1.6.3</mapstruct.version>

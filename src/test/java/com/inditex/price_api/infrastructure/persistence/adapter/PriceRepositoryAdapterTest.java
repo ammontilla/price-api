@@ -1,6 +1,7 @@
 package com.inditex.price_api.infrastructure.persistence.adapter;
 
 import com.inditex.price_api.domain.model.Price;
+import com.inditex.price_api.infrastructure.exception.PriceNotFoundException;
 import com.inditex.price_api.infrastructure.persistence.entity.BrandEntity;
 import com.inditex.price_api.infrastructure.persistence.entity.PriceEntity;
 import com.inditex.price_api.infrastructure.persistence.mapper.PriceEntityMapper;
@@ -78,7 +79,7 @@ class PriceRepositoryAdapterTest {
     void shouldThrowExceptionWhenBrandNotFound() {
         when(brandJpaRepository.findById(1)).thenReturn(Optional.empty());
 
-        RuntimeException ex = assertThrows(RuntimeException.class, () -> {
+        PriceNotFoundException ex = assertThrows(PriceNotFoundException.class, () -> {
             adapter.findPricesByCriteria(LocalDateTime.now(), 35455, 1);
         });
 

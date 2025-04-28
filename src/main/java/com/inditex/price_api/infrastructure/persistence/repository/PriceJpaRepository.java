@@ -11,7 +11,7 @@ public interface PriceJpaRepository extends JpaRepository<PriceEntity, Long> {
     List<PriceEntity> findByBrandAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
             BrandEntity brand,
             Integer productId,
-            LocalDateTime applicationDate1,
-            LocalDateTime applicationDate2
+            LocalDateTime applicationStartDate,
+            LocalDateTime applicationEndDate
     );
 }

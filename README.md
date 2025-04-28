@@ -10,7 +10,6 @@ Servicio REST desarrollado en Java con Spring Boot para consultar precios de pro
 ## 🧱 Arquitectura
 
 - ✅ **Hexagonal Architecture**
-- ✅ **DDD (Domain-Driven Design)**
 - ✅ **Clean Code + SOLID Principles**
 - ✅ Separación total de responsabilidades
 - ✅ Patrón DTO + ControllerAdvice

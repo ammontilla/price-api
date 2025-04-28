@@ -2,6 +2,7 @@ package com.inditex.price_api.core.service;
 
 import com.inditex.price_api.domain.model.Price;
 import com.inditex.price_api.domain.port.output.PriceRepositoryPort;
+import com.inditex.price_api.infrastructure.exception.PriceNotFoundException;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -39,9 +40,7 @@ class GetPriceServiceTest {
         when(mockRepo.findPricesByCriteria(any(), any(), any()))
                 .thenReturn(Collections.emptyList());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            service.getApplicablePrice(LocalDateTime.now(), 123, 1);
-        });
+        PriceNotFoundException exception = assertThrows(PriceNotFoundException.class, () -> service.getApplicablePrice(LocalDateTime.now(), 123, 1));
 
         assertEquals("No price found for given criteria", exception.getMessage());
     }
