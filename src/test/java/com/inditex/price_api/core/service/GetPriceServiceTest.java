@@ -37,12 +37,17 @@ class GetPriceServiceTest {
         PriceRepositoryPort mockRepo = mock(PriceRepositoryPort.class);
         GetPriceService service = new GetPriceService(mockRepo);
 
+        LocalDateTime applicationDate = LocalDateTime.now();
+        Integer productId = 123;
+        Integer brandId = 1;
+
         when(mockRepo.findPricesByCriteria(any(), any(), any()))
                 .thenReturn(Collections.emptyList());
 
-        PriceNotFoundException exception = assertThrows(PriceNotFoundException.class, () -> service.getApplicablePrice(LocalDateTime.now(), 123, 1));
+        PriceNotFoundException exception = assertThrows(PriceNotFoundException.class, () -> service.getApplicablePrice(applicationDate, productId, brandId));
 
-        assertEquals("No price found for given criteria", exception.getMessage());
+        assertEquals(String.format("No price found for product %d, brand %d at %s", productId, brandId, applicationDate)
+                , exception.getMessage());
     }
 
 

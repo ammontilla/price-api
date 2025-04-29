@@ -10,7 +10,7 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface PriceEntityMapper {
     @Mappings({
-            @Mapping(source = "brand.id", target = "brandId"),
+            @Mapping(source = "brand", target = "brand"),
             @Mapping(source = "curr", target = "currency")
     })
     Price toDomain(PriceEntity entity);

@@ -23,8 +23,9 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex, HttpServletRequest request) {
+        log.error("Unexpected error occurred: {}", ex.getMessage(), ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(getBuildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, INTERNAL_SERVER_ERROR, ex.getMessage(), request.getRequestURI()));
+                .body(buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, INTERNAL_SERVER_ERROR, ex.getMessage(), request.getRequestURI()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -33,27 +34,32 @@ public class GlobalExceptionHandler {
                 .map(error -> error.getField() + ": " + error.getDefaultMessage())
                 .collect(Collectors.joining(" | "));
 
+        log.warn("Validation error: {}", message);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(getBuildErrorResponse(HttpStatus.BAD_REQUEST, VALIDATION_ERROR, message, request.getRequestURI())
-                );
+                .body(buildErrorResponse(HttpStatus.BAD_REQUEST, VALIDATION_ERROR, message, request.getRequestURI()));
     }
 
-    @ExceptionHandler(PriceNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handlePriceNotFoundException(PriceNotFoundException ex, WebRequest request) {
-        log.error("Price not found: {}", ex.getMessage());
+    @ExceptionHandler({PriceNotFoundException.class, BrandNotFoundException.class})
+    public ResponseEntity<ErrorResponse> handleDomainNotFoundExceptions(RuntimeException ex, WebRequest request) {
+        log.error("Domain resource not found: {}", ex.getMessage());
 
-        ErrorResponse errorResponse = getBuildErrorResponse(HttpStatus.NOT_FOUND, NOT_FOUND, ex.getMessage(), request.getDescription(false).replace("uri=", ""));
+        ErrorResponse errorResponse = buildErrorResponse(
+                HttpStatus.NOT_FOUND,
+                NOT_FOUND,
+                ex.getMessage(),
+                request.getDescription(false).replace("uri=", "")
+        );
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
-    private static ErrorResponse getBuildErrorResponse(HttpStatus internalServerError, String internalServerError1, String ex, String request) {
+    private static ErrorResponse buildErrorResponse(HttpStatus status, String error, String message, String path) {
         return ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
-                .status(internalServerError.value())
-                .error(internalServerError1)
-                .message(ex)
-                .path(request)
+                .status(status.value())
+                .error(error)
+                .message(message)
+                .path(path)
                 .build();
     }
 }

@@ -1,6 +1,7 @@
 # 🛍️ Inditex Price API
 
-Servicio REST desarrollado en Java con Spring Boot para consultar precios de productos por marca, aplicando la tarifa con mayor prioridad en un rango de fechas.
+Servicio REST desarrollado en Java con Spring Boot para consultar precios de productos por marca, aplicando la tarifa
+con mayor prioridad en un rango de fechas.
 
 ## 📌 Requisitos funcionales
 
@@ -22,18 +23,17 @@ Servicio REST desarrollado en Java con Spring Boot para consultar precios de pro
 - Spring Data JPA
 - H2 Database (in-memory)
 - MapStruct
-- OpenAPI (Swagger) 
+- OpenAPI (Swagger)
 - JUnit 5 + Mockito
 - JaCoCo (cobertura de tests)
 - Maven
-
 
 ---
 
 ## 🧰 Instalación y ejecución local
 
-
 Clonar el repositorio:
+
 ```bach
 git clone https://github.com/ammontilla/price-api.git
 cd price-api
@@ -44,9 +44,9 @@ cd price-api
 ```bash
 ./mvnw spring-boot:run
 ```
+
 La app quedará disponible en:
 http://localhost:8080
-
 
 La app corre en http://localhost:8080.
 
@@ -57,6 +57,7 @@ curl "http://localhost:8080/prices?applicationDate=2020-06-14T16:00:00&productId
 ```
 
 ### ✅ Respuesta esperada (200 OK):
+
 ```bash
 {
   "productId": 35455,
@@ -68,7 +69,9 @@ curl "http://localhost:8080/prices?applicationDate=2020-06-14T16:00:00&productId
   "currency": "EUR"
 }
 ```
+
 ### ✅ Respuesta Error
+
 ```bash
 {
   "timestamp": "2025-04-23T23:42:34.706129",
@@ -93,6 +96,7 @@ curl "http://localhost:8080/prices?applicationDate=2020-06-14T16:00:00&productId
 ### 📈 Cobertura
 
 Usamos **JaCoCo** para asegurar cobertura de:
+
 - Núcleo de dominio
 - Lógica de negocio
 - Excepciones
@@ -109,7 +113,9 @@ mvn clean test
 ```
 
 ---
+
 ### 📈 Cobertura con JaCoCo
+
 Para generar el reporte de cobertura:
 
 ```bash
@@ -119,25 +125,36 @@ o
 ```
 
 ### 🏷️ Reporte HTML generado en:
+
 ```bash
 target/site/jacoco/index.html
 ```
+
 ---
+
 ### 📂 H2 Console
+
 Disponible en: http://localhost:8080/h2-console
 <br>JDBC URL: jdbc:h2:mem:pricesdb
 
 ---
+
 ### 📦 Docker
+
 ```bash
 docker build -t inditex-price-api .
 docker run -p 8080:8080 inditex-price-api
 ```
+
 ### 📡 CI/CD - GitHub Actions
+
 - Validación de build + tests en cada push
 - Cobertura y estilo de código
+
 ---
+
 ### 🔹 Uso en herramientas externas
+
 Puedes importar openapi.yaml en:
 
 - Swagger Editor
@@ -145,9 +162,11 @@ Puedes importar openapi.yaml en:
 - Cualquier cliente compatible con OpenAPI 3.0
 
 ---
+
 ## 📚 Documentación de la API
 
-Esta aplicación expone un endpoint REST para consultar precios aplicables a productos según fecha, marca y reglas de prioridad.
+Esta aplicación expone un endpoint REST para consultar precios aplicables a productos según fecha, marca y reglas de
+prioridad.
 
 La documentación completa está disponible en Swagger UI y como archivo OpenAPI.
 
@@ -171,6 +190,7 @@ curl http://localhost:8080/v3/api-docs.yaml -o openapi.yaml
 ```
 
 ### ✅ Buenas prácticas implementadas
+
 ✔️ Nomenclatura de commits convencional (feat:, fix:, test:...)<br>
 ✔️ Código siguiendo principios SOLID<br>
 ✔️ Clean Code<br>
@@ -182,7 +202,9 @@ curl http://localhost:8080/v3/api-docs.yaml -o openapi.yaml
 ✔️ Documentación auto-generada
 
 ### 👨‍💻 Autor
+
 Desarrollado por un desarrollador senior con 19 años de experiencia para la prueba técnica de Inditex.
 
 ### 📝 Licencia
+
 MIT

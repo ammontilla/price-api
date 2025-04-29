@@ -67,7 +67,6 @@ class GlobalExceptionHandlerTest {
 
     @Test
     void shouldHandlePriceNotFoundException() {
-        // Arrange
         GlobalExceptionHandler handler = new GlobalExceptionHandler();
         WebRequest request = mock(WebRequest.class);
 
@@ -75,10 +74,8 @@ class GlobalExceptionHandlerTest {
 
         PriceNotFoundException exception = new PriceNotFoundException("No price found for product 35455");
 
-        // Act
-        ResponseEntity<ErrorResponse> response = handler.handlePriceNotFoundException(exception, request);
+        ResponseEntity<ErrorResponse> response = handler.handleDomainNotFoundExceptions(exception, request);
 
-        // Assert
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNotNull(response.getBody());
         assertEquals("Not Found", response.getBody().getError());

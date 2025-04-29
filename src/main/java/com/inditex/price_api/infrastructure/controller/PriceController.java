@@ -40,7 +40,7 @@ public class PriceController {
             @RequestParam("productId") @Parameter(example = "35455") Integer productId,
             @RequestParam("brandId") @Parameter(example = "1") Integer brandId
     ) {
-        Price price = getPriceUseCase.getApplicablePrice(applicationDate, productId, brandId);
+        Price price = this.getPriceUseCase.getApplicablePrice(applicationDate, productId, brandId);
         return ResponseEntity.ok(PriceResponse.from(price));
     }
 }

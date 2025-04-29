@@ -1,7 +1,8 @@
 package com.inditex.price_api.infrastructure.persistence.adapter;
 
+import com.inditex.price_api.domain.model.Brand;
 import com.inditex.price_api.domain.model.Price;
-import com.inditex.price_api.infrastructure.exception.PriceNotFoundException;
+import com.inditex.price_api.infrastructure.exception.BrandNotFoundException;
 import com.inditex.price_api.infrastructure.persistence.entity.BrandEntity;
 import com.inditex.price_api.infrastructure.persistence.entity.PriceEntity;
 import com.inditex.price_api.infrastructure.persistence.mapper.PriceEntityMapper;
@@ -51,7 +52,7 @@ class PriceRepositoryAdapterTest {
                 .build();
 
         Price domainPrice = new Price(
-                brand.getId(),
+                new Brand(1, "ZARA"),
                 entity.getStartDate(),
                 entity.getEndDate(),
                 entity.getPriceList(),
@@ -63,7 +64,7 @@ class PriceRepositoryAdapterTest {
 
         when(brandJpaRepository.findById(1)).thenReturn(Optional.of(brand));
         when(priceJpaRepository.findByBrandAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-                eq(brand), eq(35455), any(), any()))
+                eq(brand), eq(35455), any(), any(), any()))
                 .thenReturn(List.of(entity));
         when(priceEntityMapper.toDomain(entity)).thenReturn(domainPrice);
 
@@ -74,16 +75,16 @@ class PriceRepositoryAdapterTest {
         assertEquals("EUR", result.get(0).currency());
     }
 
-
     @Test
     void shouldThrowExceptionWhenBrandNotFound() {
+        Integer brandId = 1;
         when(brandJpaRepository.findById(1)).thenReturn(Optional.empty());
 
-        PriceNotFoundException ex = assertThrows(PriceNotFoundException.class, () -> {
-            adapter.findPricesByCriteria(LocalDateTime.now(), 35455, 1);
+        BrandNotFoundException ex = assertThrows(BrandNotFoundException.class, () -> {
+            adapter.findPricesByCriteria(LocalDateTime.now(), 35455, brandId);
         });
 
-        assertEquals("Brand not found", ex.getMessage());
+        assertEquals("Brand not found with id: " + brandId, ex.getMessage());
     }
 
     @Test
@@ -105,8 +106,9 @@ class PriceRepositoryAdapterTest {
                 .price(new BigDecimal("35.50"))
                 .curr("EUR")
                 .build();
+
         Price domainPrice = new Price(
-                null,
+                (Brand) null,
                 entity.getStartDate(),
                 entity.getEndDate(),
                 entity.getPriceList(),
@@ -118,12 +120,12 @@ class PriceRepositoryAdapterTest {
 
         when(priceEntityMapper.toDomain(entity)).thenReturn(domainPrice);
 
-        assertNotNull(entity);
         Price price = priceEntityMapper.toDomain(entity);
 
         assertNotNull(price);
+        assertNull(price.brand());
         assertNull(price.brandId());
         assertEquals("EUR", price.currency());
-
     }
+
 }

@@ -23,6 +23,8 @@ public class GetPriceService implements GetPriceUseCase {
     public Price getApplicablePrice(LocalDateTime applicationDate, Integer productId, Integer brandId) {
         return repository.findPricesByCriteria(applicationDate, productId, brandId).stream()
                 .max(Comparator.comparingInt(Price::priority))
-                .orElseThrow(() -> new PriceNotFoundException("No price found for given criteria"));
+                .orElseThrow(() -> new PriceNotFoundException(
+                        String.format("No price found for product %d, brand %d at %s", productId, brandId, applicationDate)
+                ));
     }
 }
