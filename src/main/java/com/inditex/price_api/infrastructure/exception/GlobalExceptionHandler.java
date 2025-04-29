@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final String NOT_FOUND = "Not Found";
     private static final String INTERNAL_SERVER_ERROR = "Internal Server Error";
     private static final String VALIDATION_ERROR = "Validation Error";
 
@@ -41,7 +42,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> handlePriceNotFoundException(PriceNotFoundException ex, WebRequest request) {
         log.error("Price not found: {}", ex.getMessage());
 
-        ErrorResponse errorResponse = getBuildErrorResponse(HttpStatus.NOT_FOUND, "Not Found", ex.getMessage(), request.getDescription(false).replace("uri=", ""));
+        ErrorResponse errorResponse = getBuildErrorResponse(HttpStatus.NOT_FOUND, NOT_FOUND, ex.getMessage(), request.getDescription(false).replace("uri=", ""));
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
