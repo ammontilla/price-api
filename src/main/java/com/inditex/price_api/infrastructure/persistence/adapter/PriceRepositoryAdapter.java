@@ -7,7 +7,6 @@ import com.inditex.price_api.infrastructure.persistence.entity.BrandEntity;
 import com.inditex.price_api.infrastructure.persistence.mapper.PriceEntityMapper;
 import com.inditex.price_api.infrastructure.persistence.repository.BrandJpaRepository;
 import com.inditex.price_api.infrastructure.persistence.repository.PriceJpaRepository;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
