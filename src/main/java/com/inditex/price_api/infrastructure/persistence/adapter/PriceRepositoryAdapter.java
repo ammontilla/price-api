@@ -32,9 +32,8 @@ public class PriceRepositoryAdapter implements PriceRepositoryPort {
                 .orElseThrow(() -> new BrandNotFoundException("Brand not found with id: " + brandId));
 
         return this.priceJpaRepository
-                .findByBrandAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
-                        brand, productId, applicationDate, applicationDate,
-                        Sort.by(Sort.Direction.DESC, "priority")
+                .findApplicablePrices(
+                        brand, productId, applicationDate
                 )
                 .stream()
                 .map(this.mapper::toDomain)

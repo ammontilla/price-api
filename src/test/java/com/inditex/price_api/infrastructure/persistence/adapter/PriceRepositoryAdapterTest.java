@@ -63,8 +63,8 @@ class PriceRepositoryAdapterTest {
         );
 
         when(brandJpaRepository.findById(1)).thenReturn(Optional.of(brand));
-        when(priceJpaRepository.findByBrandAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-                eq(brand), eq(35455), any(), any(), any()))
+        when(priceJpaRepository.findApplicablePrices(
+                eq(brand), eq(35455), any()))
                 .thenReturn(List.of(entity));
         when(priceEntityMapper.toDomain(entity)).thenReturn(domainPrice);
 
