@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PriceJpaRepository extends JpaRepository<PriceEntity, Long> {
-    List<PriceEntity> findByBrandAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+    List<PriceEntity> findByBrandAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
             BrandEntity brand,
             Integer productId,
             LocalDateTime applicationStartDate,
